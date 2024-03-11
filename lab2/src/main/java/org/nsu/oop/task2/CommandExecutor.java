@@ -16,12 +16,16 @@ public class CommandExecutor {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" ");
                 String commandName = parts[0];
-                String argument = "";
+                String firstArgument = "";
+                String secondArgument = "";
                 if (parts.length > 1) {
-                    argument = parts[1];
+                    firstArgument = parts[1];
+                }
+                if (parts.length > 2) {
+                    secondArgument = parts[2];
                 }
                 try {
-                    Command command = CommandFactory.createCommand(commandName, argument);
+                    Command command = CommandFactory.createCommand(commandName, firstArgument, secondArgument);
                     command.execute(stack, variables);
                 } catch (CommandException e) {
                     System.out.println("Error while executing command: " + e.getMessage());

@@ -3,12 +3,14 @@ package org.nsu.oop.task2;
 import org.nsu.oop.task2.Commands.*;
 
 public class CommandFactory {
-    public static Command createCommand(String commandName, String argument) throws CommandException {
+    public static Command createCommand(String commandName, String firstArgument, String secondArgument) throws CommandException {
         switch (commandName) {
+            case "DEFINE":
+                return new DefineCommand(firstArgument, secondArgument);
             case "PUSH":
-                return new PushCommand(argument);
+                return new PushCommand(firstArgument);
             case "POP":
-                return new PopCommand(argument);
+                return new PopCommand(firstArgument);
             case "SQRT":
                 return new SqrtCommand();
             case "*":
