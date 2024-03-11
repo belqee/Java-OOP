@@ -1,5 +1,6 @@
 package org.nsu.oop.task2;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.Map;
@@ -14,6 +15,10 @@ public class CommandExecutor {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()){
+                    continue;
+                }
                 String[] parts = line.split(" ");
                 String commandName = parts[0];
                 String firstArgument = "";
@@ -25,7 +30,8 @@ public class CommandExecutor {
                     secondArgument = parts[2];
                 }
                 try {
-                    Command command = CommandFactory.createCommand(commandName, firstArgument, secondArgument);
+                    //System.out.println(stack + " " + variables + " " + Arrays.toString(parts));
+                    Command command = CommandFactory.createCommand(commandName, firstArgument, secondArgument); //можно передвать просто массив parts? а метод сам разберется что с этим делать
                     command.execute(stack, variables);
                 } catch (CommandException e) {
                     System.out.println("Error while executing command: " + e.getMessage());

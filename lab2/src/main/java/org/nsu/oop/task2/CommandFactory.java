@@ -7,6 +7,8 @@ public class CommandFactory {
         switch (commandName) {
             case "DEFINE":
                 return new DefineCommand(firstArgument, secondArgument);
+            case "PRINT":
+                return new PrintCommand();
             case "PUSH":
                 return new PushCommand(firstArgument);
             case "POP":
@@ -21,6 +23,8 @@ public class CommandFactory {
                 return new PlusCommand();
             case "/":
                 return new DevideCommand();
+            case "#":
+                return new NothingToDoCommand();
             default:
                 return new NullCommand();
         }

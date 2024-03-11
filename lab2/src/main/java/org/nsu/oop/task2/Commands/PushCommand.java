@@ -23,7 +23,7 @@ public class PushCommand implements Command {
             parsedValue = Double.parseDouble(value);
         } catch (NumberFormatException e) {
             if (variables.containsKey(value)) {
-                double variableValue = variables.get(value);
+                parsedValue = variables.get(value);
             } else {
                 throw new CommandException("Parameter doesn't exist");
             }
