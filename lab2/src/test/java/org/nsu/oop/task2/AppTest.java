@@ -1,38 +1,27 @@
 package org.nsu.oop.task2;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest
-        extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+public class AppTest extends TestCase {
+    public void testStringCommandExecution() {
+        String commands = "DEFINE x 5\n" +
+                "DEFINE y 3\n" +
+                "PUSH x\n" +
+                "PUSH y\n" +
+                "+\n" +
+                "PRINT\n" +
+                "PUSH x\n" +
+                "PUSH y\n" +
+                "-\n" +
+                "PRINT\n" +
+                "PUSH x\n" +
+                "SQRT\n" +
+                "PRINT\n";
+        CommandExecutor.executeCommandsFromString(commands);
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+        assertEquals(2.236, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции извлечения корня
+        assertEquals(-2.0, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции вычитания
+        assertEquals(8.0, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции сложения
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
     }
 }

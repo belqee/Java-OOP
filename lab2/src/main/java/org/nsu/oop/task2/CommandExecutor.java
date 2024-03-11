@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CommandExecutor {
+    private static final Stack<Double> stack = new Stack<>();
+    private static final Map<String, Double> variables = new HashMap<>();
+
     public static void executeCommandsFromFile(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             executeCommands(reader);
@@ -25,8 +28,6 @@ public class CommandExecutor {
     }
 
     private static void executeCommands(BufferedReader reader) throws IOException {
-        Stack<Double> stack = new Stack<>();
-        Map<String, Double> variables = new HashMap<>();
         String line;
         while ((line = reader.readLine()) != null) {
             line = line.trim();
@@ -51,4 +52,9 @@ public class CommandExecutor {
             }
         }
     }
+
+    public static double Pop(){
+        return stack.pop();
+    }
+
 }
