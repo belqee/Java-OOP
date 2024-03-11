@@ -6,7 +6,7 @@ public class App {
             String filename = args[0];
             CommandExecutor.executeCommandsFromFile(filename);
         } else {
-            System.out.println("Usage: java Main <filename>");
+            System.out.println("Wrong arguments");
         }
     }
 }
