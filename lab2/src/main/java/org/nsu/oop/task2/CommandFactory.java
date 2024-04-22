@@ -5,6 +5,7 @@ import org.nsu.oop.task2.Commands.NothingToDoCommand;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class CommandFactory {
                         String className = parts[1].trim();
                         commandClassMap.put(commandName, className);
                     }
+                    else throw new AnalyzingException("Error while analyzing data");
                 }
             } catch (IOException e) {
                 System.err.println("Error while reading configuration file: " + e.getMessage());

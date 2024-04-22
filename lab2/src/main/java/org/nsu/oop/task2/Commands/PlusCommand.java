@@ -2,13 +2,13 @@ package org.nsu.oop.task2.Commands;
 
 import org.nsu.oop.task2.Command;
 import org.nsu.oop.task2.CommandException;
-
-import java.util.Map;
+import org.nsu.oop.task2.ExecutionContext;
 import java.util.Stack;
 
 public class PlusCommand implements Command {
     @Override
-    public void execute(Stack<Double> stack, Map<String, Double> variables) throws CommandException {
+    public void execute(ExecutionContext context) throws CommandException {
+        Stack<Double> stack = context.getStack();
         if (stack.size() < 2) {
             throw new CommandException("Not enough operands on the stack for Plus");
         }

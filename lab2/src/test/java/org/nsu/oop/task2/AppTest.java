@@ -17,9 +17,9 @@ public class AppTest extends TestCase {
                 "PUSH x\n" +
                 "SQRT\n" +
                 "PRINT\n";
-        CommandExecutor.executeCommandsFromString(commands);
-        assertEquals(2.236, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции извлечения корня
-        assertEquals(-2.0, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции вычитания
-        assertEquals(8.0, CommandExecutor.Pop(), 0.001); // Ожидаемый результат для операции сложения
+        Calculator.executeCommandsFromString(commands);
+        assertEquals(2.236, Calculator.Pop(), 0.001); // Ожидаемый результат для операции извлечения корня
+        assertEquals(-2.0, Calculator.Pop(), 0.001); // Ожидаемый результат для операции вычитания
+        assertEquals(8.0, Calculator.Pop(), 0.001); // Ожидаемый результат для операции сложения
     }
 }

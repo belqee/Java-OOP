@@ -2,6 +2,7 @@ package org.nsu.oop.task2.Commands;
 
 import org.nsu.oop.task2.Command;
 import org.nsu.oop.task2.CommandException;
+import org.nsu.oop.task2.ExecutionContext;
 
 import java.util.Map;
 import java.util.Stack;
@@ -17,7 +18,7 @@ public class PushCommand implements Command {
     }
 
     @Override
-    public void execute(Stack<Double> stack, Map<String, Double> variables) throws CommandException {
+    public void execute(ExecutionContext context) throws CommandException {
         double parsedValue = 0.0;
         try {
             parsedValue = Double.parseDouble(value);

@@ -2,6 +2,7 @@ package org.nsu.oop.task2.Commands;
 
 import org.nsu.oop.task2.Command;
 import org.nsu.oop.task2.CommandException;
+import org.nsu.oop.task2.ExecutionContext;
 
 import java.util.Map;
 import java.util.Stack;
@@ -17,11 +18,11 @@ public class PopCommand implements Command {
     }
 
     @Override
-    public void execute(Stack<Double> stack, Map<String, Double> variables) throws CommandException {
-        if (stack.isEmpty()) {
+    public void execute(ExecutionContext context) throws CommandException {
+        if (context.getStack().isEmpty()) {
             throw new CommandException("Stack is empty");
         }
-        double result = stack.pop();
-        variables.put(value, result);
+        double result = context.getStack().pop();
+        context.getVariables().put(value, result);
     }
 }

@@ -4,7 +4,7 @@ public class App {
     public static void main(String[] args) {
         if (args.length == 1) {
             String filename = args[0];
-            CommandExecutor.executeCommandsFromFile(filename);
+            Calculator.executeCommandsFromFile(filename);
         } else {
             System.out.println("Wrong arguments");
         }
