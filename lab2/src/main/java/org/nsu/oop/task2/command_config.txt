@@ -1,0 +1,10 @@
+DEFINE:org.nsu.oop.task2.Commands.DefineCommand
+PRINT:org.nsu.oop.task2.Commands.PrintCommand
+PUSH:org.nsu.oop.task2.Commands.PushCommand
+POP:org.nsu.oop.task2.Commands.PopCommand
+SQRT:org.nsu.oop.task2.Commands.SqrtCommand
+*:org.nsu.oop.task2.Commands.MultiplyCommand
+-:org.nsu.oop.task2.Commands.MinusCommand
++:org.nsu.oop.task2.Commands.PlusCommand
+/:org.nsu.oop.task2.Commands.DivideCommand
+#:org.nsu.oop.task2.Commands.NothingToDoCommand
