@@ -2,12 +2,12 @@ package org.nsu.oop.task2.Commands;
 
 import org.nsu.oop.task2.Command;
 import org.nsu.oop.task2.CommandException;
+import org.nsu.oop.task2.ExecutionContext;
 
 import java.util.Map;
 import java.util.Stack;
 
-public class DefineCommand implements Command {
-    private String firstArgument, secondArgument;
+public class DefineCommand extends Command {
     public DefineCommand(String firstArgument,String secondArgument) throws CommandException {
         if (firstArgument.isEmpty() || secondArgument.isEmpty()){
             throw new CommandException("Wrong arguments");
@@ -17,7 +17,7 @@ public class DefineCommand implements Command {
     }
 
     @Override
-    public void execute(Stack<Double> stack, Map<String, Double> variables) throws CommandException {
+    public void execute(ExecutionContext context) throws CommandException {
         String name;
         double value;
         try {
@@ -33,6 +33,6 @@ public class DefineCommand implements Command {
                 name = secondArgument;
             }
         }
-        variables.put(name, value);
+        context.getVariables().put(name, value);
     }
 }

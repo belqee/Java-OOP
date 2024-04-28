@@ -7,15 +7,19 @@ import org.nsu.oop.task2.ExecutionContext;
 import java.util.Map;
 import java.util.Stack;
 
-public class MultiplyCommand implements Command {
+public class MultiplyCommand extends Command {
+    public MultiplyCommand(String firstArgument,String secondArgument) throws CommandException {
+        this.firstArgument = firstArgument;
+        this.secondArgument = secondArgument;
+    }
     @Override
     public void execute(ExecutionContext context) throws CommandException {
-        if (stack.size() < 2) {
+        if (context.getStack().size() < 2) {
             throw new CommandException("Not enough operands on the stack for Multiply");
         }
-        double firstOperand = stack.pop();
-        double secondOperand = stack.pop();
+        double firstOperand = context.getStack().pop();
+        double secondOperand = context.getStack().pop();
         double result = firstOperand * secondOperand;
-        stack.push(result);
+        context.getStack().push(result);
     }
 }

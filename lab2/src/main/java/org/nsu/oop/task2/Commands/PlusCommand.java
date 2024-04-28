@@ -5,7 +5,11 @@ import org.nsu.oop.task2.CommandException;
 import org.nsu.oop.task2.ExecutionContext;
 import java.util.Stack;
 
-public class PlusCommand implements Command {
+public class PlusCommand extends Command {
+    public PlusCommand(String firstArgument,String secondArgument) throws CommandException {
+        this.firstArgument = firstArgument;
+        this.secondArgument = secondArgument;
+    }
     @Override
     public void execute(ExecutionContext context) throws CommandException {
         Stack<Double> stack = context.getStack();

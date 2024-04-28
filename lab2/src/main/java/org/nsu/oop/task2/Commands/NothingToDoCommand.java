@@ -7,7 +7,8 @@ import org.nsu.oop.task2.ExecutionContext;
 import java.util.Map;
 import java.util.Stack;
 
-public class NothingToDoCommand implements Command {
+public class NothingToDoCommand extends Command {
+
     @Override
     public void execute(ExecutionContext context) throws CommandException {
     }

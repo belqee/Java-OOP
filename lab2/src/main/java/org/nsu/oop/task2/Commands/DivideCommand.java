@@ -7,19 +7,23 @@ import org.nsu.oop.task2.ExecutionContext;
 import java.util.Map;
 import java.util.Stack;
 
-public class DivideCommand implements Command {
+public class DivideCommand extends Command {
+    public DivideCommand(String firstArgument,String secondArgument) throws CommandException {
+        this.firstArgument = firstArgument;
+        this.secondArgument = secondArgument;
+    }
     @Override
     public void execute(ExecutionContext context) throws CommandException {
-        if (stack.size() < 2) {
+        if (context.getStack().size() < 2) {
             throw new CommandException("Not enough operands on the stack for Devide");
         }
 
-        double firstOperand = stack.pop();
-        double secondOperand = stack.pop();
+        double firstOperand = context.getStack().pop();
+        double secondOperand = context.getStack().pop();
         if (secondOperand == 0.0){
             throw new CommandException("Division by zero");
         }
         double result = firstOperand / secondOperand;
-        stack.push(result);
+        context.getStack().push(result);
     }
 }

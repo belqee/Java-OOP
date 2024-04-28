@@ -7,14 +7,15 @@ import org.nsu.oop.task2.ExecutionContext;
 import java.util.Map;
 import java.util.Stack;
 
-public class PopCommand implements Command {
+public class PopCommand extends Command {
+
     private String value = "";
 
-    public PopCommand(String value) throws CommandException {
-        if (value.isEmpty()){
+    public PopCommand(String firstArgument,String secondArgument) throws CommandException {
+        if (firstArgument.isEmpty()){
             throw new CommandException("Argument is Empty");
         }
-        this.value = value;
+        this.firstArgument = value;
     }
 
     @Override

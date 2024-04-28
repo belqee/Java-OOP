@@ -7,14 +7,14 @@ import org.nsu.oop.task2.ExecutionContext;
 import java.util.Map;
 import java.util.Stack;
 
-public class PushCommand implements Command {
+public class PushCommand extends Command {
     private String value;
 
-    public PushCommand(String value) throws CommandException {
-        if (value.isEmpty()) {
+    public PushCommand(String firstArgument, String secondArgument) throws CommandException {
+        if (firstArgument.isEmpty()) {
             throw new CommandException("Value is empty");
         }
-        this.value = value;
+        this.value = firstArgument;
     }
 
     @Override
@@ -23,12 +23,12 @@ public class PushCommand implements Command {
         try {
             parsedValue = Double.parseDouble(value);
         } catch (NumberFormatException e) {
-            if (variables.containsKey(value)) {
-                parsedValue = variables.get(value);
+            if (context.getVariables().containsKey(value)) {
+                parsedValue = context.getVariables().get(value);
             } else {
                 throw new CommandException("Parameter doesn't exist");
             }
         }
-        stack.push(parsedValue);
+        context.getStack().push(parsedValue);
     }
 }

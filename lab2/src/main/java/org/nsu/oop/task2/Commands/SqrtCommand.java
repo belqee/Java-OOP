@@ -5,14 +5,18 @@ import org.nsu.oop.task2.ExecutionContext;
 
 import java.util.Map;
 import java.util.Stack;
-public class SqrtCommand implements Command {
+public class SqrtCommand extends Command {
+    public SqrtCommand(String firstArgument,String secondArgument) throws CommandException {
+        this.firstArgument = firstArgument;
+        this.secondArgument = secondArgument;
+    }
     @Override
     public void execute(ExecutionContext context) throws CommandException {
-        if (stack.isEmpty()) {
+        if (context.getStack().isEmpty()) {
             throw new CommandException("Not enough operands on the stack for SQRT");
         }
-        double operand = stack.pop();
+        double operand = context.getStack().pop();
         double result = Math.sqrt(operand);
-        stack.push(result);
+        context.getStack().push(result);
     }
 }

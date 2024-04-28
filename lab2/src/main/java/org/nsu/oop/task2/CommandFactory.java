@@ -14,7 +14,9 @@ public class CommandFactory {
 
     static {
         try {
-            try (BufferedReader reader = new BufferedReader(new FileReader("command_config.txt"))) {
+            String currentDir = System.getProperty("user.dir");
+            String filePath = currentDir + "/src/main/java/org/nsu/oop/task2/command_config.txt";
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(":");
