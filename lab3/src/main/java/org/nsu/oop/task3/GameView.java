@@ -19,26 +19,16 @@ class GameView extends JFrame {
         setVisible(true);
     }
 
-    // Метод для отображения игрового мира
     public void render() {
-        // Получаем список шариков из модели
         List<Ball> balls = model.getBalls();
-
-        // Создаем новый объект Graphics для отрисовки на экране
         Graphics g = getGraphics();
-
-        // Очищаем экран
         g.clearRect(0, 0, getWidth(), getHeight());
-
-        // Проверяем, что список шариков не пуст
         if (balls != null) {
-            // Отрисовываем каждый шарик
             for (Ball ball : balls) {
                 ball.draw(g);
             }
         }
 
-        // Освобождаем ресурсы Graphics
         g.dispose();
     }
 

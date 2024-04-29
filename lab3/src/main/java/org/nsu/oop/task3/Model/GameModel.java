@@ -11,7 +11,6 @@ public class GameModel {
 
     public GameModel() {
         balls = new ArrayList<>();
-        // Создаем несколько шариков для начала игры
         balls.add(new Ball(100, 100, 30, Color.RED));
         balls.add(new Ball(200, 200, 20, Color.BLUE));
         balls.add(new Ball(300, 300, 40, Color.GREEN));

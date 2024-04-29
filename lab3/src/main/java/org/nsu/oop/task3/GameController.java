@@ -21,8 +21,6 @@ class GameController implements KeyListener{
         view.setFocusable(true);
     }
 
-    // Метод для обновления позиции шарика по нажатию клавиши
-    // Метод для обновления позиции шарика по нажатию клавиши
     private void updateBallPosition() {
         int dx = 0, dy = 0;
         if (upPressed) dy = -1;
@@ -33,7 +31,6 @@ class GameController implements KeyListener{
         view.render();
     }
 
-    // Метод для обработки событий нажатия клавиш
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
@@ -52,12 +49,11 @@ class GameController implements KeyListener{
         }
         updateBallPosition();
     }
+
     public void startGame(GameModel model, GameView view) {
-//        this.model = model;
-//        this.view = view;
         view.render();
     }
-    // Остальные методы интерфейса KeyListener, нам не требуются, но их нужно реализовать
+
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
