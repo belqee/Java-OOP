@@ -7,10 +7,21 @@ public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                GameModel model = new GameModel();
-                GameView view = new GameView(model);
-                GameController controller = new GameController(model, view);
-                controller.startGame(model, view);
+                GameModel gameModel = new GameModel();
+                GameView gameView = new GameView(gameModel);
+
+                JFrame frame = new JFrame();
+                frame.setTitle("Agario-like Game");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setResizable(false);
+                frame.getContentPane().add(gameView);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
+                GameController gameController = new GameController(gameModel, gameView);
+                gameModel.InitializeField(gameView, gameController);
+                gameController.startGame(gameModel, gameView);
             }
         });
     }

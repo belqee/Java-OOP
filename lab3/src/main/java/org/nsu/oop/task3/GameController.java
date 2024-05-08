@@ -1,76 +1,57 @@
 package org.nsu.oop.task3;
 import org.nsu.oop.task3.Model.Ball;
 import org.nsu.oop.task3.Model.GameModel;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-class GameController implements KeyListener{
+
+public class GameController implements MouseMotionListener {
     private GameModel model;
     private GameView view;
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private int mouseX = 0;
+    private int mouseY = 0;
 
     public GameController(GameModel model, GameView view) {
         this.model = model;
         this.view = view;
-        view.addKeyListener(this);
+        view.addMouseMotionListener(this);
         view.setFocusable(true);
     }
 
-    private void updateBallPosition() {
-        int dx = 0, dy = 0;
-        if (upPressed) dy = -1;
-        if (downPressed) dy = 1;
-        if (leftPressed) dx = -1;
-        if (rightPressed) dx = 1;
-        model.updateBallPosition(dx, dy);
-        view.render();
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                upPressed = true;
-                break;
-            case KeyEvent.VK_S:
-                downPressed = true;
-                break;
-            case KeyEvent.VK_A:
-                leftPressed = true;
-                break;
-            case KeyEvent.VK_D:
-                rightPressed = true;
-                break;
-        }
-        updateBallPosition();
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        //System.out.println(String.valueOf(e.getX()) + " " + String.valueOf(e.getY()));
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
     public void startGame(GameModel model, GameView view) {
+
         view.render();
     }
 
-    public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                upPressed = false;
-                break;
-            case KeyEvent.VK_S:
-                downPressed = false;
-                break;
-            case KeyEvent.VK_A:
-                leftPressed = false;
-                break;
-            case KeyEvent.VK_D:
-                rightPressed = false;
-                break;
-        }
-        updateBallPosition();
+    public int getMouseX() {
+        return mouseX;
     }
-    public void keyTyped(KeyEvent e) {}
+
+    public int getMouseY() {
+        return mouseY;
+    }
 }

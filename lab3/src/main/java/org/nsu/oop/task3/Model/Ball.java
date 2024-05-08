@@ -1,57 +1,53 @@
 package org.nsu.oop.task3.Model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-public class Ball {
-    private int x; // Координата x шарика
-    private int y; // Координата y шарика
-    private int size; // Размер шарика
-    private Color color; // Цвет шарика
-
-    public Ball(int x, int y, int size, Color color) {
+public class Ball extends Entity {
+    public Ball(double x, double y, int size, int index) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.color = color;
+        this.index = index;
     }
 
-    // Геттеры и сеттеры для полей шарика
-    public int getX() {
-        return x;
+    public int getIndex() {
+        return index;
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    // Метод для отрисовки шарика
     public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x, y, size, size);
+        g.setColor(intToColor(index));
+        int centerX = (int) (x - size / 2);
+        int centerY = (int) (y - size / 2);
+        g.fillOval(centerX, centerY, (int) Math.round(size), (int) Math.round(size));
+
+        if (index == 0) {
+            g.setColor(Color.WHITE);
+            String numberString = "УЙЦУЙУЙЦУЙЦУ";
+
+            Font font = new Font("Arial", Font.BOLD, (int)((double)Math.round(1.4*size/numberString.length()) )); // Выбираем шрифт и размер
+            g.setFont(font);
+
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(numberString);
+            int textHeight = fm.getHeight();
+            int textX = centerX + ((int) Math.round(size ) - textWidth) / 2;
+            int textY = centerY + ((int) Math.round(size ) - textHeight) / 2 + fm.getAscent();
+            g.drawString(numberString, textX, textY);
+        }else  {
+            g.setColor(Color.WHITE);
+            String numberString = String.valueOf(index);
+
+
+            Font font = new Font("Arial", Font.BOLD, (int)((double)Math.round(1.4*size/numberString.length()) )); // Выбираем шрифт и размер
+            g.setFont(font);
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(numberString);
+            
+            int textHeight = fm.getHeight();
+            int textX = centerX + ((int) Math.round(size ) - textWidth) / 2;
+            int textY = centerY + ((int) Math.round(size ) - textHeight) / 2 + fm.getAscent();
+            g.drawString(numberString, textX, textY);
+        }
     }
 }
