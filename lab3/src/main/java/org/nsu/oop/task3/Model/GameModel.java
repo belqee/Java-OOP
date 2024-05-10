@@ -60,7 +60,7 @@ public class GameModel {
     }
 
     private void update() {
-        for (Iterator<Ball> iterator = balls.iterator(); iterator.hasNext();) {
+        for (Iterator<Ball> iterator = balls.iterator(); iterator.hasNext(); ) {
             Ball ball = iterator.next();
             updateBallPosition(ball);
             if (ball.getSize() <= 0) {
@@ -69,6 +69,7 @@ public class GameModel {
         }
         feeds.removeIf(feed -> feed.getSize() <= 0);
     }
+
     private double distance(Ball a, Ball b) {
         double aX = a.getX();
         double aY = a.getY();
@@ -98,6 +99,7 @@ public class GameModel {
         double dy = mouseY - ballY;
         return Math.sqrt(dx * dx + dy * dy);
     }
+
     public List<Ball> getBalls() {
         return balls;
     }
@@ -105,27 +107,18 @@ public class GameModel {
     public List<Feed> getFeeds() {
         return feeds;
     }
+
     private void updateBallPosition(Ball ball) {
         if (ball.getSize() <= 0) return;
-        double minSmall = 2500;
-        double minBig = 2500;
-        double distanceSmall = -1;
-        double distanceBig = -1;
-        Ball targetBig = null;
+        double minSmall = 9999;
         Ball targetSmall = null;
         for (Ball anotherBall : balls) {
             if (anotherBall != ball && anotherBall.getSize() > 0) {
                 if (anotherBall.getSize() < ball.getSize()) {
-                    distanceSmall = distance(ball, anotherBall);
+                    double distanceSmall = distance(ball, anotherBall);
                     if (distanceSmall < minSmall) {
                         targetSmall = anotherBall;
                         minSmall = distanceSmall;
-                    }
-                } else {
-                    distanceBig = distance(ball, anotherBall);
-                    if (distanceBig < minBig) {
-                        targetBig = anotherBall;
-                        minBig = distanceBig;
                     }
                 }
             }
@@ -141,18 +134,39 @@ public class GameModel {
             ball.setX(ball.getX() + VectorX / length * deltaSec);
             ball.setY(ball.getY() + VectorY / length * deltaSec);
         } else {
-            if (targetSmall != null && distanceSmall < targetSmall.getSize() * 100) {
+
+            if (targetSmall != null && minSmall < targetSmall.getSize() * 100) {
                 double VectorX = targetSmall.getX() - ball.getX();
                 double VectorY = targetSmall.getY() - ball.getY();
                 double length = Math.sqrt(VectorX * VectorX + VectorY * VectorY);
                 ball.setX(ball.getX() + VectorX / length * deltaSec);
                 ball.setY(ball.getY() + VectorY / length * deltaSec);
             } else {
-                Random random = new Random((long) (ball.getX() + ball.getY()));
+                double minFeed = 9999;
+                Feed targetFeed = null;
+                for (Feed anotherFeed : feeds) {
+                    if (anotherFeed.getSize() > 0) {
+                        double distanceSmall = distance(anotherFeed, ball);
+                        if (distanceSmall < minSmall) {
+                            targetFeed = anotherFeed;
+                            minFeed = distanceSmall;
+                        }
+                    }
+                }
+                if (targetFeed != null && minFeed < targetFeed.getSize() * 100) {
+                    double VectorX = targetFeed.getX() - ball.getX();
+                    double VectorY = targetFeed.getY() - ball.getY();
+                    double length = Math.sqrt(VectorX * VectorX + VectorY * VectorY);
+                    ball.setX(ball.getX() + VectorX / length * deltaSec);
+                    ball.setY(ball.getY() + VectorY / length * deltaSec);
+                } else {
+                    Random random = new Random((long) (ball.getX() + ball.getY()));
 
-                ball.setX(ball.getX() + (random.nextInt(2)) * deltaSec);
-                ball.setY(ball.getY() + (random.nextInt(2)) * deltaSec);
+                    ball.setX(ball.getX() + (random.nextInt(2)) * deltaSec);
+                    ball.setY(ball.getY() + (random.nextInt(2)) * deltaSec);
+                }
             }
+
         }
         for (Feed feed : feeds) {
             if (distance(feed, ball) < (ball.getSize() - feed.getSize()) / 2) {
