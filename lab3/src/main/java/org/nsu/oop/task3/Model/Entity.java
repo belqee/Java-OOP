@@ -7,7 +7,7 @@ public abstract class Entity {
     protected double y;
     public double size;
     protected int index;
-    public abstract void draw(Graphics g);
+
     public double getX() {
         return x;
     }

@@ -3,9 +3,7 @@ package org.nsu.oop.task3.Model;
 import org.nsu.oop.task3.GameController;
 import org.nsu.oop.task3.GameView;
 
-import javax.swing.*;
 import javax.swing.Timer;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -13,81 +11,64 @@ import java.util.List;
 
 public class GameModel {
     private List<Ball> balls;
-    private List<Feed> feeds;// Список шариков в игре
-    GameView gameView = null;
-    GameController gameController = null;
+    private List<Feed> feeds;
+    private GameView gameView = null;
+    private GameController gameController = null;
     private final int tickInterval = 1000 / 120;
     private final Timer timer;
-    private final double deltaMultiplier = 3;
-    double deltaSec = ((double) 1 / tickInterval) * deltaMultiplier;
+    private final Timer feedTimer;
+    private final double deltaMultiplier = 4;
+    private final double deltaSec;
+    private final Random random = new Random(System.currentTimeMillis());
+    private int feedDiameter = 100 + random.nextInt(200);
 
     public GameModel() {
         balls = new ArrayList<>();
         feeds = new ArrayList<>();
-        timer = new Timer(tickInterval, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                update(); // Вызываем метод обновления поля
-            }
-        });
+        deltaSec = ((double) 1 / tickInterval) * deltaMultiplier;
+        timer = new Timer(tickInterval, e -> update());
+        feedTimer = new Timer(1000, e -> spawnFeed());
+    }
+
+    private void spawnFeed() {
+        feedDiameter++;
+        feeds.add(new Feed(random.nextInt(gameView.getWidth()), random.nextInt(gameView.getHeight()), 5 + random.nextInt(20), feedDiameter));
     }
 
     public void startGame() {
-        timer.start(); // Запускаем таймер при старте игры
+        timer.start();
+        feedTimer.start();
     }
 
     public void stopGame() {
-        timer.stop(); // Останавливаем таймер при окончании игры
-    }
-
-    public List<Object> getObjects() {
-        List<Object> objects = new ArrayList<>();
-        return objects;
+        timer.stop();
+        feedTimer.stop();
     }
 
     public void InitializeField(GameView gameView, GameController gameController) {
         this.gameView = gameView;
         this.gameController = gameController;
         balls.add(new Ball((double) gameView.getWidth() / 2, (double) gameView.getHeight() / 2, 50, 0));
-        long currentTimeMillis = System.currentTimeMillis();
-        Random random = new Random(currentTimeMillis);
         int ballDiameter = 20 + random.nextInt(50);
         for (int i = 1; i < ballDiameter; ++i) {
             balls.add(new Ball(random.nextInt(gameView.getWidth()), random.nextInt(gameView.getHeight()), 20 + random.nextInt(20), i));
         }
-        int feedDiameter = 100 + random.nextInt(200);
         for (int i = 1; i < ballDiameter; ++i) {
             feeds.add(new Feed(random.nextInt(gameView.getWidth()), random.nextInt(gameView.getHeight()), 5 + random.nextInt(20), i));
         }
         startGame();
     }
 
-    int imitateJob(int c) {
-        long currentTimeMillis = System.currentTimeMillis();
-        Random random = new Random(currentTimeMillis);
-        int sum = 0;
-        c = random.nextInt(c);
-        while (c > 0) {
-            for (int i = 0; i < random.nextInt(10000000); ++i) {
-                sum += random.nextInt(2);
+    private void update() {
+        for (Iterator<Ball> iterator = balls.iterator(); iterator.hasNext();) {
+            Ball ball = iterator.next();
+            updateBallPosition(ball);
+            if (ball.getSize() <= 0) {
+                iterator.remove();
             }
-            --c;
         }
-        return sum;
+        feeds.removeIf(feed -> feed.getSize() <= 0);
     }
-
-    public List<Ball> getBalls() {
-        return balls;
-    }
-
-    public List<Feed> getFeeds() {
-        return feeds;
-    }
-
-    public void setGameView(GameView gameView) {
-        this.gameView = gameView;
-    }
-
     private double distance(Ball a, Ball b) {
         double aX = a.getX();
         double aY = a.getY();
@@ -117,7 +98,13 @@ public class GameModel {
         double dy = mouseY - ballY;
         return Math.sqrt(dx * dx + dy * dy);
     }
+    public List<Ball> getBalls() {
+        return balls;
+    }
 
+    public List<Feed> getFeeds() {
+        return feeds;
+    }
     private void updateBallPosition(Ball ball) {
         if (ball.getSize() <= 0) return;
         double minSmall = 2500;
@@ -154,17 +141,17 @@ public class GameModel {
             ball.setX(ball.getX() + VectorX / length * deltaSec);
             ball.setY(ball.getY() + VectorY / length * deltaSec);
         } else {
-            if (targetSmall != null) {
+            if (targetSmall != null && distanceSmall < targetSmall.getSize() * 100) {
                 double VectorX = targetSmall.getX() - ball.getX();
                 double VectorY = targetSmall.getY() - ball.getY();
                 double length = Math.sqrt(VectorX * VectorX + VectorY * VectorY);
                 ball.setX(ball.getX() + VectorX / length * deltaSec);
                 ball.setY(ball.getY() + VectorY / length * deltaSec);
             } else {
-                Random random = new Random();
+                Random random = new Random((long) (ball.getX() + ball.getY()));
 
-                ball.setX(ball.getX() + (random.nextInt(2) - 1) * deltaSec);
-                ball.setY(ball.getY() + (random.nextInt(2) - 1) * deltaSec);
+                ball.setX(ball.getX() + (random.nextInt(2)) * deltaSec);
+                ball.setY(ball.getY() + (random.nextInt(2)) * deltaSec);
             }
         }
         for (Feed feed : feeds) {
@@ -183,21 +170,5 @@ public class GameModel {
                 targetSmall.setSize(0);
             }
         }
-    }
-
-    private void update() {
-        List<Ball> copyOfBalls = new ArrayList<>(balls);
-        List<Feed> copyOfFeeds = new ArrayList<>(feeds);
-        Iterator<Ball> iterator1 = copyOfBalls.iterator();
-        while (iterator1.hasNext()) {
-            Ball ball = iterator1.next();
-            updateBallPosition(ball);
-            if (ball.getSize() <= 0) {
-                iterator1.remove();
-            }
-        }
-        copyOfFeeds.removeIf(feed -> feed.getSize() <= 0);
-        feeds = copyOfFeeds;
-        balls = copyOfBalls;
     }
 }

@@ -4,15 +4,12 @@ import org.nsu.oop.task3.Model.GameModel;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.io.File;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
 
 
-public class GameController implements MouseMotionListener {
+public class GameController implements MouseMotionListener, MouseListener {
     private GameModel model;
     private GameView view;
     private boolean upPressed = false;
@@ -41,7 +38,34 @@ public class GameController implements MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
     }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        int button = e.getButton();
+        switch (button) {
+            case MouseEvent.BUTTON1: // ЛКМ
 
+                break;
+            case MouseEvent.BUTTON3: // ПКМ
+
+                break;
+
+        }
+    }
+
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // кнопка мыши отпускается
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
     public void startGame(GameModel model, GameView view) {
 
         view.render();
